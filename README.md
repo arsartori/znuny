@@ -1,2 +1,2 @@
 # docker-znuny
-Create Dcoker image with Znuny (OTRS)
+Create Docker image with Znuny (OTRS)
