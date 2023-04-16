@@ -27,6 +27,6 @@ RUN ln -s /opt/otrs/scripts/apache2-httpd.include.conf /etc/apache2/conf-availab
     a2enmod perl headers deflate filter cgi && a2dismod mpm_event && a2enmod mpm_prefork && a2enconf znuny
 RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/otrs/var/cron/otrs_daemon
 ADD start-znuny.sh /usr/local/bin
-RUN chmod +x /usr/local/bin/start-znuny.sh
+RUN chmod +x /usr/local/bin/start-znuny.sh && update-rc.d cron defaults
 EXPOSE 80 443
 CMD ["start-znuny.sh"]
