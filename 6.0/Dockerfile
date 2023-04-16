@@ -25,5 +25,8 @@ RUN su - otrs && cd /opt/otrs/var/cron && for foo in *.dist; do cp $foo `basenam
 # Config Apache
 RUN ln -s /opt/otrs/scripts/apache2-httpd.include.conf /etc/apache2/conf-available/znuny.conf && \
     a2enmod perl headers deflate filter cgi && a2dismod mpm_event && a2enmod mpm_prefork && a2enconf znuny
+RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/otrs/var/cron/otrs_daemon
+ADD start-znuny.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/start-znuny.sh
 EXPOSE 80 443
-CMD ["apache2ctl","-DFOREGROUND"]
+CMD ["start-znuny.sh"]
