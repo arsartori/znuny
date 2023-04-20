@@ -2,28 +2,28 @@
 Create Docker image with Znuny (OTRS)
 
 ## Database
-CREATE DATABASE otrs CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';
-create user otrs identified by 'otrs';
+CREATE DATABASE otrs CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';  
+create user otrs identified by 'otrs';  
 grant all privileges on otrs.* to otrs@'%';
 
 6.0
-max_allowed_packet   = 64M
-query_cache_size     = 32M
+max_allowed_packet   = 64M  
+query_cache_size     = 32M  
 innodb_log_file_size = 256M
 
 6.1
 /etc/mysql/mariadb.conf.d/50-znuny_config.cnf
 
-[mysql]
-max_allowed_packet=256M
-[mysqldump]
+[mysql]  
+max_allowed_packet=256M  
+[mysqldump]  
 max_allowed_packet=256M
 
-[mysqld]
-innodb_file_per_table
-innodb_log_file_size = 256M
-max_allowed_packet=256M
-character-set-server  = utf8
+[mysqld]  
+innodb_file_per_table  
+innodb_log_file_size = 256M  
+max_allowed_packet=256M  
+character-set-server  = utf8  
 collation-server      = utf8_general_ci
 
 ## Install
@@ -35,7 +35,7 @@ apt -y install cpanminus libapache2-mod-perl2 libdbd-mysql-perl libtimedate-perl
 cpanm install Jq
 
 # Download Znuny
-cd /opt
+cd /opt  
 wget https://download.znuny.org/releases/znuny-latest-6.1.tar.gz
 
 # Extract
@@ -54,9 +54,9 @@ cp /opt/otrs/Kernel/Config.pm.dist /opt/otrs/Kernel/Config.pm
 /opt/otrs/bin/otrs.SetPermissions.pl
 
 # As otrs User - Rename default cronjobs
-su - otrs
-cd /opt/otrs/var/cron
-for foo in *.dist; do cp $foo `basename $foo .dist`; done
+su - otrs  
+cd /opt/otrs/var/cron  
+for foo in *.dist; do cp $foo `basename $foo .dist`; done  
 
 # Check modules
 ~otrs/bin/otrs.CheckModules.pl --all
