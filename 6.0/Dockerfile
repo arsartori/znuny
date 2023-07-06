@@ -1,6 +1,6 @@
 # Znuny docker image.
 FROM ubuntu:20.04
-LABEL maintainer="Andre Sartori <dev@aph.dev.br>"
+LABEL maintainer="Andre Sartori <andre@aph.dev.br>"
 # Variables
 #ENV ZNUNY_Version=6.0.36
 ARG ZNUNY_VERSION
@@ -25,7 +25,8 @@ RUN su - otrs && cd /opt/otrs/var/cron && for foo in *.dist; do cp $foo `basenam
 # Config Apache
 RUN ln -s /opt/otrs/scripts/apache2-httpd.include.conf /etc/apache2/conf-available/znuny.conf && \
     a2enmod perl headers deflate filter cgi && a2dismod mpm_event && a2enmod mpm_prefork && a2enconf znuny
-RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/otrs/var/cron/otrs_daemon
+RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/otrs/var/cron/otrs_daemon \
+    ln -sf /dev/stdout /var/log/cron
 ADD start-znuny.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/start-znuny.sh && update-rc.d cron defaults
 EXPOSE 80 443
