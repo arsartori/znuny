@@ -2,7 +2,6 @@ FROM ubuntu:20.04
 
 LABEL maintainer="Andre Sartori <andre@aph.dev.br>"
 
-#ENV ZNUNY_Version=6.0.36
 ARG ZNUNY_VERSION
 ENV TZ=America/Sao_Paulo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -16,9 +15,8 @@ RUN apt update && apt install -y apache2 libapache2-mod-perl2 libdbd-mysql-perl 
 # Download and install znuny
 RUN cd /opt && wget https://download.znuny.org/releases/znuny-${ZNUNY_VERSION}.tar.gz && \
     tar xfz znuny-${ZNUNY_VERSION}.tar.gz && ln -s /opt/znuny-${ZNUNY_VERSION} /opt/otrs && \
-    cp /opt/otrs/Kernel/Config.pm.dist /opt/otrs/Kernel/Config.pm
-# Add user and set permission
-RUN useradd -d /opt/otrs -c 'Znuny user' -g www-data -s /bin/bash -M -N otrs && /opt/otrs/bin/otrs.SetPermissions.pl
+    cp /opt/otrs/Kernel/Config.pm.dist /opt/otrs/Kernel/Config.pm && \
+    useradd -d /opt/otrs -c 'Znuny user' -g www-data -s /bin/bash -M -N otrs && /opt/otrs/bin/otrs.SetPermissions.pl
 # Config crontab
 RUN su - otrs && cd /opt/otrs/var/cron && for foo in *.dist; do cp $foo `basename $foo .dist`; done
 # Config Apache
