@@ -1,8 +1,5 @@
 FROM ubuntu:20.04
-
 LABEL maintainer="Andre Sartori <andre@aph.dev.br>"
-
-ARG ZNUNY_VERSION
 ENV TZ=America/Sao_Paulo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Update and install
@@ -13,8 +10,8 @@ RUN apt update && apt install -y apache2 libapache2-mod-perl2 libdbd-mysql-perl 
     libmoo-perl bash-completion libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl \
     libauthen-sasl-perl libauthen-ntlm-perl wget cron && apt clean
 # Download and install znuny
-RUN cd /opt && wget https://download.znuny.org/releases/znuny-${ZNUNY_VERSION}.tar.gz && \
-    tar xfz znuny-${ZNUNY_VERSION}.tar.gz && ln -s /opt/znuny-${ZNUNY_VERSION} /opt/otrs && \
+RUN cd /opt && wget https://download.znuny.org/releases/znuny-6.0.36.tar.gz && \
+    tar xfz znuny-${ZNUNY_VERSION}.tar.gz && ln -s /opt/znuny-6.0.36 /opt/otrs && \
     cp /opt/otrs/Kernel/Config.pm.dist /opt/otrs/Kernel/Config.pm && \
     useradd -d /opt/otrs -c 'Znuny user' -g www-data -s /bin/bash -M -N otrs && /opt/otrs/bin/otrs.SetPermissions.pl
 # Config crontab
