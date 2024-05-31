@@ -1,8 +1,8 @@
-# Znuny 6.0.36 
-This is the first version I've used
+# Znuny
+This is the first version I've used: 6.0.36
 
 ## Build Docker Container
-docker build -t znuny:6.0.36 --build-arg ZNUNY_VERSION=6.0.36 . 
+docker build -t znuny . 
 
 ## Run
 docker compose up -d
