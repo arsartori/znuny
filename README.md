@@ -2,7 +2,9 @@
 This is the first version I've used: 6.0.36
 
 ## Build Docker Container
-docker build -t znuny . 
+docker build -t znuny:6.0.37 . 
 
 ## Run
-docker compose up -d
+``
+docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.0.37
+``
