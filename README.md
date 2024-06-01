@@ -1,8 +1,11 @@
 # Znuny
-This is the first version I've used: 6.0.36
+This is the simple version of howto create a Znuny Docker Container.
+Version: 6.0.37
 
 ## Build Docker Container
+``
 docker build -t znuny:6.0.37 . 
+``
 
 ## Run
 ``
