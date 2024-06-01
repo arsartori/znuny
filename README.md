@@ -1,13 +1,12 @@
 # Znuny
-This is the simple version of howto create a Znuny Docker Container.
-Version: 6.0.37
+This is a simple way to create a Docker container with Znuny version 6.0.37.
 
-## Build Docker Container
+## Build container
 ``
 docker build -t znuny:6.0.37 . 
 ``
 
-## Run
+## Run container
 ``
 docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.0.37
 ``
