@@ -19,7 +19,7 @@ RUN cd /opt && wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz 
 RUN su - otrs && cd /opt/otrs/var/cron && for foo in *.dist; do cp $foo `basename $foo .dist`; done
 # Config Apache
 RUN ln -s /opt/otrs/scripts/apache2-httpd.include.conf /etc/apache2/conf-available/znuny.conf && \
-    a2enmod perl headers deflate filter cgi && a2dismod mpm_event && a2enmod mpm_prefork && a2enconf znuny \
+    a2enmod perl headers deflate filter cgi && a2dismod mpm_event && a2enmod mpm_prefork && a2enconf znuny && \
     echo 'ServerName znuny' >> /etc/apache2/apache2.conf
 # Config znuny
 RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/otrs/var/cron/otrs_daemon && ln -sf /dev/stdout /var/log/cron && ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr /var/log/apache2/error.log
