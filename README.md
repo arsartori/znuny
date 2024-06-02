@@ -22,5 +22,5 @@ docker cp znuny:/opt/otrs/Kernel/Config.pm /opt/container/znuny/Config.pm
 
 ### Run with Config.pm and upgrade DB
 ``
-docker run -d --name znuny -p 80:80 -p 443:443 -v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:6.0.36
+docker run -d --name znuny -p 80:80 -p 443:443 -v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:<version>
 ``
