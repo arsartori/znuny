@@ -3,7 +3,7 @@ This is a simple way to create a Docker container with Znuny.
 
 ## Build container
 ``
-docker build -t znuny:<version> .
+docker build --build-arg VERSION=<version> -t znuny:<version> .
 ``
 
 ## Run container
