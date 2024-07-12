@@ -27,3 +27,15 @@ Adicione essas configurações no arquivo conf.d/znuny.cnf do banco de dados (Ma
 	[mysqld]
 	max_allowed_packet = 64MB
 	innodb_log_file_size = 256MB
+ 
+### Backup e Restore
+Backup direto do banco de dados
+	mysqldump -u znuny -pznuny --add-drop-database --databases znuny | gzip > /tmp/znuny.sql.gz
+
+Para restaurar direto no banco de dados
+	gunzip < znuny.sql.gz | mariadb -u znuny -pznuny
+
+Criar uma rotina de backup full todos os dias as 5:00 da manhã e deletar os backup com mais de 8 dias.
+
+Adicionar no crontab do container:
+	05 05 * * * /opt/otrs/scripts/backup.pl -d /opt/backups/ -c gzip -r 8 -f fullbackup
