@@ -26,8 +26,10 @@ Adicione essas configurações no arquivo conf.d/znuny.cnf do banco de dados (Ma
 
 	[mysql]
 	max_allowed_packet=256M
+ 
 	[mysqldump]
 	max_allowed_packet=256M
+ 
 	[mysqld]
 	innodb_file_per_table
 	innodb_log_file_size = 256M
@@ -56,10 +58,14 @@ Adicionar no crontab do container:
 	su -c "/opt/otrs/bin/otrs.Console.pl Admin::Package::UpgradeAll" -s /bin/bash otrs
 
 ### Configurar redirecionado de URL.
+Criar um arquivo para as configurações
+
 	vi /etc/apache2/sites-available/znuny.conf
 
+Cole o conteúdo no arquivo
+
 	<VirtualHost *:80>
-	  ServerName helpdesk.lab.corp
+	  ServerName helpdesk.local
 	  DocumentRoot "/opt/otrs/bin/cgi-bin/"
 	  Alias /otrs-web/ "/opt/otrs/var/httpd/htdocs/"
 	  <Location "/otrs-web/">
@@ -79,25 +85,27 @@ Adicionar no crontab do container:
 	    </Directory>
 	</Virtualhost>
 
-<VirtualHost *:80>
-  ServerName suporte.lab.corp
-  DocumentRoot "/opt/otrs/bin/cgi-bin/"
-  Alias /otrs-web/ "/opt/otrs/var/httpd/htdocs/"
-  <Location "/otrs-web/">
-    SetHandler default-handler
-  </Location>
-        <Directory "/opt/otrs/bin/cgi-bin">
-        AllowOverride None
-        Options +ExecCGI
-        Order allow,deny
-        Allow from all
+	<VirtualHost *:80>
+	  ServerName suporte.local
+	  DocumentRoot "/opt/otrs/bin/cgi-bin/"
+	  Alias /otrs-web/ "/opt/otrs/var/httpd/htdocs/"
+	  <Location "/otrs-web/">
+	    SetHandler default-handler
+	  </Location>
+	  <Directory "/opt/otrs/bin/cgi-bin">
+	    AllowOverride None
+	    Options +ExecCGI
+            Order allow,deny
+            Allow from all
+            ErrorDocument 403 /index.pl
+            DirectoryIndex index.pl
+            AddHandler  perl-script .pl .cgi
+            PerlResponseHandler ModPerl::Registry
+            PerlOptions +ParseHeaders
+            PerlOptions +SetupEnv
+          </Directory>
+	</Virtualhost>
 
-        ErrorDocument 403 /index.pl
-        DirectoryIndex index.pl
-        AddHandler  perl-script .pl .cgi
-        PerlResponseHandler ModPerl::Registry
-        PerlOptions +ParseHeaders
-        PerlOptions +SetupEnv
-        </Directory>
+ Habilite o arquivo
 
-</Virtualhost>
+ 	a2ensite znuny
