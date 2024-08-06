@@ -1,22 +1,22 @@
-# Znuny 6.2.2
 
-### Criar imagem com a ultima versão
-	docker build -t znuny:6.2.2 --build-arg VERSION=6.2.2 .
+# Znuny 6.3.4
+
+### Criar imagem usando o Docker Build
+	docker build -t znuny:6.3.4 --build-arg VERSION=6.3.4 .
 
 ### Para rodar o container, digite:
-	docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.2.2
+	docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.3.4
 
-### Para atualizar a versão, copie o arquivo 'Config.pm' de dentro do container para um lugar no host.
-
+### Para atualizar a versão, copie o arquivo 'Config.pm' de dentro do container para uma pasta no host.
 	mkdir -p /opt/docker/znuny
 	docker cp znuny:/opt/otrs/Kernel/Config.pm /opt/container/znuny/Config.pm
 
-Se for apenas atualizar das versões 6.2.0 ou 6.2.2, adicione a variavel "-e ZNUNY_UPDATE=yes"
+#### Para atualizar as versões 6.3.x, adicione a variavel "-e ZNUNY_UPDATE=yes"
 
-Para atualizar da versão 6.1, adicione a variavel "-e ZNUNY_UPGRADE=yes"
+#### Para atualizar da versão 6.2.x, adicione a variavel "-e ZNUNY_UPGRADE=yes"
 
 	docker run -d --name znuny -p 80:80 -p 443:443 -e ZNUNY_UPGRADE=yes \
-	-v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:6.2.2
+	-v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:6.3.4
 
 ### Para criar o banco de dados, acesse o servidor e digite:
 	CREATE DATABASE znuny CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';
@@ -42,7 +42,7 @@ Backup direto do banco de dados
 
 	mysqldump -u znuny -pznuny --add-drop-database --databases znuny | gzip > /tmp/znuny.sql.gz
 
-Para restaurar direto no banco de dados
+#### Para restaurar direto no banco de dados
 
 	gunzip < znuny.sql.gz | mariadb -u znuny -pznuny
 
