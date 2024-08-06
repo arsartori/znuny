@@ -1,3 +1,4 @@
+
 # Znuny 6.3.4
 
 ### Criar imagem usando o Docker Build
@@ -23,9 +24,18 @@
 
 Adicione essas configurações no arquivo conf.d/znuny.cnf do banco de dados (MariaDB ou MySQL)
 
+	[mysql]
+	max_allowed_packet=256M
+ 
+	[mysqldump]
+	max_allowed_packet=256M
+ 
 	[mysqld]
-	max_allowed_packet = 256MB
-	innodb_log_file_size = 256MB
+	innodb_file_per_table
+	innodb_log_file_size = 256M
+	max_allowed_packet=256M
+	character-set-server  = utf8
+	collation-server      = utf8_general_ci
  
 ### Backup e Restore
 Backup direto do banco de dados
@@ -41,3 +51,61 @@ Criar uma rotina de backup full todos os dias as 5:00 da manhã e deletar os bac
 Adicionar no crontab do container:
 
 	05 05 * * * /opt/otrs/scripts/backup.pl -d /opt/backups/ -c gzip -r 8 -f fullbackup
+
+### Opções de verificações
+	su -c "/opt/otrs/bin/otrs.CheckModules.pl --all" -s /bin/bash otrs
+	su -c "/opt/otrs/bin/otrs.Console.pl Maint::Config::Rebuild" -s /bin/bash otrs
+	su -c "/opt/otrs/bin/otrs.Console.pl Admin::Package::UpgradeAll" -s /bin/bash otrs
+
+### Configurar redirecionado de URL.
+Criar um arquivo para as configurações
+
+	vi /etc/apache2/sites-available/znuny.conf
+
+Cole o conteúdo no arquivo
+
+	<VirtualHost *:80>
+	  ServerName helpdesk.local
+	  DocumentRoot "/opt/otrs/bin/cgi-bin/"
+	  Alias /otrs-web/ "/opt/otrs/var/httpd/htdocs/"
+	  <Location "/otrs-web/">
+	    SetHandler default-handler
+	  </Location>
+          <Directory "/opt/otrs/bin/cgi-bin">
+	    AllowOverride None
+	    Options +ExecCGI
+	    Order allow,deny
+	    Allow from all
+	    ErrorDocument 403 /customer.pl
+	    DirectoryIndex customer.pl
+	    AddHandler  perl-script .pl .cgi
+	    PerlResponseHandler ModPerl::Registry
+	    PerlOptions +ParseHeaders
+	    PerlOptions +SetupEnv
+	    </Directory>
+	</Virtualhost>
+
+	<VirtualHost *:80>
+	  ServerName suporte.local
+	  DocumentRoot "/opt/otrs/bin/cgi-bin/"
+	  Alias /otrs-web/ "/opt/otrs/var/httpd/htdocs/"
+	  <Location "/otrs-web/">
+	    SetHandler default-handler
+	  </Location>
+	  <Directory "/opt/otrs/bin/cgi-bin">
+	    AllowOverride None
+	    Options +ExecCGI
+            Order allow,deny
+            Allow from all
+            ErrorDocument 403 /index.pl
+            DirectoryIndex index.pl
+            AddHandler  perl-script .pl .cgi
+            PerlResponseHandler ModPerl::Registry
+            PerlOptions +ParseHeaders
+            PerlOptions +SetupEnv
+          </Directory>
+	</Virtualhost>
+
+ Habilite o arquivo
+
+ 	a2ensite znuny
