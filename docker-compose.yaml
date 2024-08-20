@@ -1,7 +1,7 @@
 services:
   znuny:
     container_name: znuny
-    image: znuny:6.3.4
+    image: znuny:6.4.5
     hostname: znuny
     ports:
       - "80:80"
