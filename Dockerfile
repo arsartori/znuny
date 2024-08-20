@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Andre Sartori <andre@aph.dev.br>"
 ARG VERSION
 ENV TZ=America/Sao_Paulo
@@ -9,8 +9,8 @@ RUN apt update && apt install -y apache2 libapache2-mod-perl2 libdbd-mysql-perl 
 	libtext-csv-xs-perl libjson-xs-perl libapache-dbi-perl libxml-libxml-perl libxml-libxslt-perl \
 	libyaml-perl libarchive-zip-perl libcrypt-eksblowfish-perl libencode-hanextra-perl \
 	libmail-imapclient-perl libtemplate-perl libdatetime-perl libmoo-perl bash-completion \
-	libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl libspreadsheet-xlsx-perl \
-	libauthen-sasl-perl libauthen-ntlm-perl wget cron && apt clean
+	libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl libauthen-sasl-perl \
+	libauthen-ntlm-perl libhash-merge-perl libical-parser-perl libspreadsheet-xlsx-perl wget cron && apt clean
 # Download and install znuny
 RUN cd /opt && wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz && \
 	tar xfz znuny-${VERSION}.tar.gz && ln -s /opt/znuny-${VERSION} /opt/otrs && \
