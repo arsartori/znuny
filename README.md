@@ -1,10 +1,10 @@
-# Znuny 6.4.5
+# Znuny 6.5
 
 ### Criar imagem usando o Docker Build
-	docker build -t znuny:6.4.5 --build-arg VERSION=6.4.5 .
+	docker build -t znuny:6.5.10 --build-arg VERSION=6.5.10 .
 
 ### Para rodar o container, digite:
-	docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.4.5
+	docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.5.10
 
 ### Para atualizar a versão, copie o arquivo 'Config.pm' de dentro do container para uma pasta no host.
 	mkdir -p /opt/docker/znuny
@@ -15,7 +15,7 @@
 #### Para atualizar da versão 6.3.x, adicione a variavel "-e ZNUNY_UPGRADE=yes"
 
 	docker run -d --name znuny -p 80:80 -p 443:443 -e ZNUNY_UPGRADE=yes \
-	-v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:6.4.5
+	-v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:6.5.10
 
 ### Para criar o banco de dados, acesse o servidor e digite:
 	CREATE DATABASE znuny CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';
