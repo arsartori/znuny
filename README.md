@@ -165,7 +165,7 @@ $Self->{'Customer::AuthModule::LDAP::SearchUserDN1'} = 'CN=znuny,CN=Users,DC=ser
 $Self->{'Customer::AuthModule::LDAP::SearchUserPw1'} = 'senha';
 $Self->{'Customer::AuthModule::LDAP::AlwaysFilter1'} =
 '(&(objectclass=user)(!(objectclass=computer))(!(userAccountControl:1.2.840.113556.1.4.803:=2)))';
-# $Self->{'Customer::AuthModule::LDAP::Die1'} = 0;
+$Self->{'Customer::AuthModule::LDAP::Die1'} = 0;
 
 ### Sincronização de clientes
 $Self->{CustomerUser1} = {
