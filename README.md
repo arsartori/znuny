@@ -1,25 +1,20 @@
 # Znuny 6.5
 
-### 1) Criar imagem usando o Docker Build
-	docker build -t znuny:6.5.10 --build-arg VERSION=6.5.10 .
-
-### 2) Para rodar o container, digite:
-	docker run -d --name znuny -p 80:80 -p 443:443 znuny:6.5.10
-
-### 3) Para atualizar a versão, copie o arquivo 'Config.pm' de dentro do container para uma pasta no host.
+## 1) Faça o download do container
+	docker pull arsartori/znuny:latest
+## 2) Crie uma pasta para o arquivo de configuração
 	mkdir -p /opt/docker/znuny
-	docker cp znuny:/opt/otrs/Kernel/Config.pm /opt/docker/znuny/Config.pm
+## 3) Copie o arquivo Config.pm para a pasta criada
+	cp Config.pm /opt/docker/znuny/
+## 4) Adicione o arquvivo znuny-db.cnf na pasta de configuração do banco de dados (MySQL ou MariaDB)
+	cp znuny-db.cnf /etc/mysql/conf.d/
+## 5) Execute o znuny:
+	docker run -d --name znuny -p 80:80 -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
-#### 3.1) Para atualizar as versões 6.4.x, adicione a variavel "-e ZNUNY_UPDATE=yes"
 
-#### 3.2) Para atualizar da versão 6.3.x, adicione a variavel "-e ZNUNY_UPGRADE=yes"
+# Para atualizar a versão do znuny, execute o znuny com a opção ZNUNY_UPDATE = yes
+	docker run -d --name znuny -p 80:80 -e ZNUNY_UPDATE=yes -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
-	docker run -d --name znuny -p 80:80 -p 443:443 -e ZNUNY_UPGRADE=yes \
-	-v /opt/container/znuny/Config.pm:/opt/otrs/Kernel/Config.pm znuny:6.5.10
-
-### 4) Para criar o banco de dados, acesse o servidor e digite:
-	CREATE DATABASE znuny CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';
-	GRANT ALL ON znuny.* TO 'znuny'@'%' IDENTIFIED BY 'znuny';
 
 Adicione essas configurações no arquivo conf.d/znuny.cnf do banco de dados (MariaDB ou MySQL)
 
