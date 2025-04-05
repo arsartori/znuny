@@ -11,8 +11,8 @@
 ### 5) Execute o znuny:
 	docker run -d --name znuny -p 80:80 -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
-## Para atualizar a versão do znuny, execute o znuny com a opção ZNUNY_UPDATE = yes
-	docker run -d --name znuny -p 80:80 -e ZNUNY_UPDATE=yes -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
+## Para atualizar a versão do znuny, execute o znuny com a opção ZNUNY_UPGRADE = yes
+	docker run -d --name znuny -p 80:80 -e ZNUNY_UPGRADE=yes -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
 ## Backup e Restore
 Backup direto do banco de dados
