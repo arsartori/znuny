@@ -1,37 +1,20 @@
 # Znuny 6.5
 
-## 1) Faça o download do container
+### 1) Faça o download do container
 	docker pull arsartori/znuny:latest
-## 2) Crie uma pasta para o arquivo de configuração
+### 2) Crie uma pasta para o arquivo de configuração
 	mkdir -p /opt/docker/znuny
-## 3) Copie o arquivo Config.pm para a pasta criada
+### 3) Copie o arquivo Config.pm para a pasta criada
 	cp Config.pm /opt/docker/znuny/
-## 4) Adicione o arquvivo znuny-db.cnf na pasta de configuração do banco de dados (MySQL ou MariaDB)
+### 4) Adicione o arquvivo znuny-db.cnf na pasta de configuração do banco de dados (MySQL ou MariaDB)
 	cp znuny-db.cnf /etc/mysql/conf.d/
-## 5) Execute o znuny:
+### 5) Execute o znuny:
 	docker run -d --name znuny -p 80:80 -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
-
-# Para atualizar a versão do znuny, execute o znuny com a opção ZNUNY_UPDATE = yes
+## Para atualizar a versão do znuny, execute o znuny com a opção ZNUNY_UPDATE = yes
 	docker run -d --name znuny -p 80:80 -e ZNUNY_UPDATE=yes -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
-
-Adicione essas configurações no arquivo conf.d/znuny.cnf do banco de dados (MariaDB ou MySQL)
-
-	[mysql]
-	max_allowed_packet=256M
- 
-	[mysqldump]
-	max_allowed_packet=256M
- 
-	[mysqld]
-	innodb_file_per_table
-	innodb_log_file_size = 256M
-	max_allowed_packet=256M
-	character-set-server  = utf8
-	collation-server      = utf8_general_ci
- 
-### 5) Backup e Restore
+## Backup e Restore
 Backup direto do banco de dados
 
 	mysqldump -u znuny -pznuny --add-drop-database --databases znuny | gzip > /tmp/znuny.sql.gz
