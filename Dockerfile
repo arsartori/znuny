@@ -10,12 +10,13 @@ RUN apt update && apt install -y apache2 cpanminus libapache2-mod-perl2 libdbd-m
 	libyaml-perl libarchive-zip-perl libcrypt-eksblowfish-perl libencode-hanextra-perl \
 	libmail-imapclient-perl libtemplate-perl libdatetime-perl libmoo-perl bash-completion \
 	libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl libauthen-sasl-perl \
-	libauthen-ntlm-perl wget && apt clean
+	libauthen-ntlm-perl libdata-uuid-perl wget && apt clean
 	# Download and install znuny
 RUN cd /opt && wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz && \
 	tar xfz znuny-${VERSION}.tar.gz && ln -s /opt/znuny-${VERSION} /opt/znuny && \
 	cp /opt/znuny/Kernel/Config.pm.dist /opt/znuny/Kernel/Config.pm && useradd -d /opt/znuny \
-	-c 'Znuny user' -g www-data -s /bin/bash -M -N znuny && /opt/znuny/bin/znuny.SetPermissions.pl
+	-c 'Znuny user' -g www-data -s /bin/bash -M -N znuny && /opt/znuny/bin/znuny.SetPermissions.pl && \
+	rm /opt/znuny/znuny-${VERSION}.tar.gz
 # Config crontab
 RUN su - znuny && cd /opt/znuny/var/cron && for foo in *.dist; do cp $foo `basename $foo .dist`; done
 # Config Apache
