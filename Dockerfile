@@ -27,6 +27,6 @@ RUN ln -sf /dev/stdout \
 	/var/log/cron && ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr \
 	/var/log/apache2/error.log
 ADD start-znuny.sh /usr/local/bin
-RUN chmod +x /usr/local/bin/start-znuny.sh && update-rc.d cron defaults
+RUN chmod +x /usr/local/bin/start-znuny.sh
 EXPOSE 80 443
 CMD ["start-znuny.sh"]
