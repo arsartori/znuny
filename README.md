@@ -1,4 +1,4 @@
-# Znuny 6.5
+# Znuny 7.0
 
 ### 1) Faça o download do container
 	docker pull arsartori/znuny:latest
