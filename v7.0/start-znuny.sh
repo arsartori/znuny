@@ -7,7 +7,7 @@ if [ $ZNUNY_UPGRADE == 'yes' ]; then
 	su -c "/opt/znuny/scripts/MigrateToZnuny7_0.pl" -s /bin/bash znuny
 fi
 # Start cron
-su -c "/opt/znuny/bin/Cron.sh start" -s /bin/bash otrs
+su -c "/opt/znuny/bin/Cron.sh start" -s /bin/bash znuny
 service cron start
 # Start Apache
 apachectl -D FOREGROUND
