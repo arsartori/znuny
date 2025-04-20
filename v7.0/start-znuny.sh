@@ -1,6 +1,6 @@
 #!/bin/bash
 # Set Permission on all files
-/opt/otrs/bin/otrs.SetPermissions.pl
+/opt/znuny/bin/otrs.SetPermissions.pl
 # Update Database
 if [ $ZNUNY_UPGRADE == 'yes' ]; then
         echo "Atualizando ..."
