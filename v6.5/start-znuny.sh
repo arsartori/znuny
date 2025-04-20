@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Set Permission on all files
 /opt/otrs/bin/otrs.SetPermissions.pl
 # Update Database

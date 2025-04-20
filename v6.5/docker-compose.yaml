@@ -1,7 +1,7 @@
 services:
   znuny:
+    image: arsartori/znuny:latest
     container_name: znuny
-    image: znuny:6.4.5
     hostname: znuny
     ports:
       - "80:80"

@@ -1,4 +1,4 @@
-# Znuny 6.5
+# Znuny
 
 ### 1) Faça o download do container
 	docker pull arsartori/znuny:latest
@@ -14,27 +14,17 @@
 ## Para atualizar a versão do znuny, execute o znuny com a opção ZNUNY_UPGRADE = yes
 	docker run -d --name znuny -p 80:80 -e ZNUNY_UPGRADE=yes -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
-## Backup e Restore
-Backup direto do banco de dados
+## Opções de verificações
+	docker exec znuny su -c "/opt/otrs/bin/otrs.CheckModules.pl --all" -s /bin/bash otrs
+	docker exec znuny su -c "/opt/otrs/bin/otrs.Console.pl Maint::Config::Rebuild" -s /bin/bash otrs
+	docker exec znuny su -c "/opt/otrs/bin/otrs.Console.pl Admin::Package::UpgradeAll" -s /bin/bash otrs
 
-	mysqldump -u znuny -pznuny --add-drop-database --databases znuny | gzip > /tmp/znuny.sql.gz
+## Backup
+	mysqldump -u znuny -p --add-drop-database --databases znuny | gzip > /tmp/znuny.sql.gz
+## Restore
+	gunzip < znuny.sql.gz | mariadb -u znuny -p
 
-#### Para restaurar direto no banco de dados
-
-	gunzip < znuny.sql.gz | mariadb -u znuny -pznuny
-
-Criar uma rotina de backup full todos os dias as 5:00 da manhã e deletar os backup com mais de 8 dias.
-
-Adicionar no crontab do container:
-
-	05 05 * * * /opt/otrs/scripts/backup.pl -d /opt/backups/ -c gzip -r 8 -f fullbackup
-
-### Opções de verificações
-	su -c "/opt/otrs/bin/otrs.CheckModules.pl --all" -s /bin/bash otrs
-	su -c "/opt/otrs/bin/otrs.Console.pl Maint::Config::Rebuild" -s /bin/bash otrs
-	su -c "/opt/otrs/bin/otrs.Console.pl Admin::Package::UpgradeAll" -s /bin/bash otrs
-
-### Configurar redirecionado de URL.
+## Configurar redirecionado de URL.
 Criar um arquivo para as configurações
 
 	vi /etc/apache2/sites-available/znuny.conf
