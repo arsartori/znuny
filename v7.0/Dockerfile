@@ -10,7 +10,7 @@ RUN apt update && apt install -y apache2 cpanminus libapache2-mod-perl2 libdbd-m
         libyaml-perl libarchive-zip-perl libcrypt-eksblowfish-perl libencode-hanextra-perl \
         libmail-imapclient-perl libtemplate-perl libdatetime-perl libmoo-perl bash-completion \
         libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl libauthen-sasl-perl \
-        libauthen-ntlm-perl libdata-uuid-perl wget && apt clean
+        libauthen-ntlm-perl libdata-uuid-perl wget cron && apt clean
 # Download and install znuny
 RUN wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz -P /tmp && \
         tar xf /tmp/znuny-${VERSION}.tar.gz -C /opt && ln -s /opt/znuny-${VERSION} /opt/znuny && \
@@ -26,7 +26,7 @@ RUN ln -s /opt/znuny/scripts/apache2-httpd.include.conf /etc/apache2/conf-availa
 # Config znuny
 RUN ln -sf /dev/stdout /var/log/cron && ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr \
         /var/log/apache2/error.log
-RUN sed -i 's/\$HOME/\/opt\/znuny/g' /opt/znuny/var/cron/znuny_daemon && ln -sf /dev/stdout /var/log/cron && \
+RUN sed -i 's/opt/znuny/g' /opt/znuny/var/cron/znuny_daemon && ln -sf /dev/stdout /var/log/cron && \
 	ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr /var/log/apache2/error.log
 ADD start-znuny.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/start-znuny.sh
