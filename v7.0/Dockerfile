@@ -21,6 +21,7 @@ RUN wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz -P /tmp && 
 RUN su - znuny && cd /opt/znuny/var/cron && for foo in *.dist; do cp $foo `basename $foo .dist`; done
 # Config Apache
 RUN ln -s /opt/znuny/scripts/apache2-httpd.include.conf /etc/apache2/conf-available/znuny.conf && \
+        sed -i 's/ScriptAlias\ \/znuny\//ScriptAlias\ \/znuny/g' /etc/apache2/conf-available/znuny.conf && \
         a2enmod perl headers deflate filter cgi && a2dismod mpm_event && a2enmod mpm_prefork headers filter && \
         a2enconf znuny && echo 'ServerName znuny' >> /etc/apache2/apache2.conf
 # Config znuny
