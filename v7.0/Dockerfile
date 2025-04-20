@@ -26,7 +26,7 @@ RUN ln -s /opt/znuny/scripts/apache2-httpd.include.conf /etc/apache2/conf-availa
 # Config znuny
 RUN ln -sf /dev/stdout /var/log/cron && ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr \
         /var/log/apache2/error.log
-RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/otrs/var/cron/otrs_daemon && ln -sf /dev/stdout /var/log/cron && \
+RUN sed -i 's/\$HOME/\/opt\/otrs/g' /opt/znuny/var/cron/otrs_daemon && ln -sf /dev/stdout /var/log/cron && \
 	ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr /var/log/apache2/error.log
 ADD start-znuny.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/start-znuny.sh
