@@ -10,7 +10,7 @@ RUN apt update && apt install -y apache2 cpanminus libapache2-mod-perl2 libdbd-m
         libyaml-perl libarchive-zip-perl libcrypt-eksblowfish-perl libencode-hanextra-perl \
         libmail-imapclient-perl libtemplate-perl libdatetime-perl libmoo-perl bash-completion \
         libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl libauthen-sasl-perl \
-        libauthen-ntlm-perl libdata-uuid-perl wget cron && apt clean
+        libauthen-ntlm-perl libdata-uuid-perl libical-parser-perl wget cron && apt clean
 # Download and install znuny
 RUN wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz -P /tmp && \
         tar xf /tmp/znuny-${VERSION}.tar.gz -C /opt && ln -s /opt/znuny-${VERSION} /opt/znuny && \
