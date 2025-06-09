@@ -4,7 +4,7 @@
 # Update Database
 if [ $ZNUNY_UPGRADE == 'yes' ]; then
         echo "Atualizando ..."
-	su -c "/opt/znuny/scripts/MigrateToZnuny7_0.pl" -s /bin/bash znuny
+	su -c "/opt/znuny/scripts/MigrateToZnuny7_1.pl" -s /bin/bash znuny
 fi
 # Start cron
 su -c "/opt/znuny/bin/Cron.sh start" -s /bin/bash znuny

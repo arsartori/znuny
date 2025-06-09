@@ -1,6 +1,6 @@
 services:
   znuny:
-    image: arsartori/znuny:latest
+    image: arsartori/znuny:7.1-latest
     container_name: znuny
     hostname: znuny
     ports:
