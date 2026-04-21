@@ -1,6 +1,6 @@
 services:
   znuny:
-    image: arsartori/znuny:latest
+    image: znuny:6.5-latest
     container_name: znuny
     hostname: znuny
     ports:
@@ -11,4 +11,3 @@ services:
       ZNUNY_UPGRADE: no
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm
