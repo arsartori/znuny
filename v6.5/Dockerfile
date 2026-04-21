@@ -1,8 +1,8 @@
 FROM ubuntu:22.04
-LABEL maintainer="Andre Sartori <dev@aphtec.com.br>"
-ARG VERSION
-ENV TZ=America/Sao_Paulo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+LABEL maintainer="Andre Sartori <andre@aphtec.com.br>"
+# ARG VERSION
+# ENV TZ=America/Sao_Paulo
+# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Update and install
 RUN apt update && apt install -y apache2 libapache2-mod-perl2 libdbd-mysql-perl libtimedate-perl \
 	libnet-dns-perl libnet-ldap-perl libio-socket-ssl-perl libpdf-api2-perl libsoap-lite-perl \
@@ -10,10 +10,11 @@ RUN apt update && apt install -y apache2 libapache2-mod-perl2 libdbd-mysql-perl 
 	libyaml-perl libarchive-zip-perl libcrypt-eksblowfish-perl libencode-hanextra-perl \
 	libmail-imapclient-perl libtemplate-perl libdatetime-perl libmoo-perl bash-completion \
 	libyaml-libyaml-perl libjavascript-minifier-xs-perl libcss-minifier-xs-perl libauthen-sasl-perl \
-	libauthen-ntlm-perl libhash-merge-perl libical-parser-perl libspreadsheet-xlsx-perl wget cron && apt clean
+	libauthen-ntlm-perl libhash-merge-perl libical-parser-perl libspreadsheet-xlsx-perl wget cron && \
+	apt clean && rm -rf /var/lib/apt/lists/*
 # Download and install znuny
-RUN cd /opt && wget https://download.znuny.org/releases/znuny-${VERSION}.tar.gz && \
-	tar xfz znuny-${VERSION}.tar.gz && ln -s /opt/znuny-${VERSION} /opt/otrs && \
+RUN cd /opt && wget https://download.znuny.org/releases/znuny-latest-6.5.tar.gz && \
+	tar xfz znuny-latest-6.5.tar.gz && ln -s /opt/znuny-6.5* /opt/otrs && \
 	cp /opt/otrs/Kernel/Config.pm.dist /opt/otrs/Kernel/Config.pm && useradd -d /opt/otrs \
 	-c 'Znuny user' -g www-data -s /bin/bash -M -N otrs && \
 	/opt/otrs/bin/otrs.SetPermissions.pl

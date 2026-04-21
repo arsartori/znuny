@@ -1,0 +1,9 @@
+[mysql]
+max_allowed_packet=256M
+
+[mysqldump]
+max_allowed_packet=256M
+
+[mysqld]
+innodb_log_file_size = 256M
+max_allowed_packet=256M
