@@ -8,6 +8,24 @@
 	cp Config.pm /opt/docker/znuny/
 ### 4) Adicione o arquvivo znuny-db.cnf na pasta de configuração do banco de dados (MySQL ou MariaDB)
 	cp znuny-db.cnf /etc/mysql/conf.d/
+
+[mysql]
+max_allowed_packet=256M
+
+[mysqldump]
+max_allowed_packet=256M
+
+[mysqld]
+innodb_file_per_table
+innodb_log_file_size = 256M
+max_allowed_packet=256M
+character-set-server  = utf8
+collation-server      = utf8_general_ci
+
+
+
+
+
 ### 5) Execute o znuny:
 	docker run -d --name znuny -p 80:80 -v /opt/docker/znuny/Config.pm:/opt/otrs/Kernel/Config.pm arsartori/znuny:latest
 
